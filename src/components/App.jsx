@@ -6,37 +6,37 @@ import PopupWithForm from "./PopupWithForm.jsx";
 import ImagePopup from "./ImagePopup.jsx";
 
 function App() {
-  
-  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [openImagePopup, setOpenImagePopup] = React.useState(false);
 
-const handleCardClick =(card) =>{
-  setOpenImagePopup(!openImagePopup);
-  setSelectedCard(card)
-  console.log(selectedCard);
-
-} 
+  const handleCardClick = (card) => {
+    setOpenImagePopup(!openImagePopup);
+    setSelectedCard(card);
+    console.log(selectedCard);
+  };
   function handleEditProfileClick() {
-    setisEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
     // formProfileValidator.resetValidation ();
   }
 
   function handleAddPlaceClick() {
-    setisAddPlacePopupOpen(!isAddPlacePopupOpen);
+    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
     //formAddValidator.resetValidation();
   }
   function handleEditAvatarClick() {
-    setisEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
     // formEditAvatarValidator.resetValidation();
   }
-  
+
   function closeAllPopups() {
-    setisEditProfilePopupOpen(false);
-    setisAddPlacePopupOpen(false);
-    setisEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
     setOpenImagePopup(false);
   }
 
@@ -48,9 +48,9 @@ const handleCardClick =(card) =>{
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
-          onCardClick = {handleCardClick}
+          onCardClick={handleCardClick}
         />
-            
+
         <Footer />
 
         <PopupWithForm
@@ -115,18 +115,18 @@ const handleCardClick =(card) =>{
           <span className="link-input-error popup__message-error"></span>
         </PopupWithForm>
 
-        <ImagePopup 
-        card={selectedCard}
-        onClose={closeAllPopups}
-        isOpen={openImagePopup}>
-        </ImagePopup>
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}
+          isOpen={openImagePopup}
+        />
 
         <PopupWithForm
           name="confirm"
           title="Вы уверены?"
           buttonText="Да"
           container="confirm"
-        ></PopupWithForm>
+        />
 
         <PopupWithForm
           name="update"
@@ -147,7 +147,6 @@ const handleCardClick =(card) =>{
           />
           <span className="avatar-input-error popup__message-error"></span>
         </PopupWithForm>
-
       </div>
     </div>
   );
