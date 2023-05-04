@@ -1,9 +1,30 @@
 import React from "react";
 
-function PopupWithForm({isOpen, onClose, name, title, buttonText, container, children, popupName}) {
-  const className = `popup popup_type_${name} ${
-    isOpen ? "popup_opened" : ""
-  }`;
+function PopupWithForm({
+  isOpen,
+  onClose,
+  onSubmit,
+  name,
+  title,
+  buttonText,
+  container,
+  children,
+  popupName,
+}) {
+    /* React.useEffect(()=>{
+    if(isOpen)return;
+   
+    const closeByEsc =(evt)=>{
+      if (evt.key === 'Escape') {
+        onClose();
+    }} 
+
+    document.addEventListener('keydown', closeByEsc);
+    return()=>document.removeEventListener('keydown', closeByEsc);
+  },[isOpen,onClose])*/
+
+  const className = `popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`;
+  
   return (
     <section className={className}>
       <div className={`popup__container popup__${container}-container`}>
@@ -17,16 +38,13 @@ function PopupWithForm({isOpen, onClose, name, title, buttonText, container, chi
 
         <button
           className={`popup__button popup__button_type_${name}`}
-          type="submit"
+          onClick={onSubmit}
+          type='submit'
         >
           {buttonText}
         </button>
 
-        <button
-          className="popup__close"
-          type="button"
-          onClick={onClose}
-        />
+        <button className="popup__close" type="button" onClick={onClose} />
       </div>
     </section>
   );
