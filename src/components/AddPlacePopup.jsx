@@ -1,11 +1,15 @@
 import PopupWithForm from "./PopupWithForm.jsx";
-import React from "react";
+import React, { useState, useEffect } from 'react';
 //import { CurrentUserContext } from "../contexsts/CurrentUserContext";
 
 function AddPlacePopup ({isOpen, onClose, onAddPlace}){
    const [name, setName] = React.useState('');
    const [link, setLink] = React.useState('');
-   const [textSubmit, setTextSubmit]=React.useState("Создать");
+   const [textSubmit, setTextSubmit]=useState('');
+
+   useEffect(() => {
+    setTimeout(()=>setTextSubmit('Создать'), 1000)   
+  }, [isOpen]);
 
    function handleChangeName(evt) {
     setName(evt.target.value);

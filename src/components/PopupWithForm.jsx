@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
 function PopupWithForm({
   isOpen,
@@ -11,8 +11,8 @@ function PopupWithForm({
   children,
   popupName,
 }) {
-    /* React.useEffect(()=>{
-    if(isOpen)return;
+  useEffect(()=>{
+    if(!isOpen)return;
    
     const closeByEsc =(evt)=>{
       if (evt.key === 'Escape') {
@@ -21,7 +21,7 @@ function PopupWithForm({
 
     document.addEventListener('keydown', closeByEsc);
     return()=>document.removeEventListener('keydown', closeByEsc);
-  },[isOpen,onClose])*/
+  },[isOpen, onClose])
 
   const className = `popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`;
   

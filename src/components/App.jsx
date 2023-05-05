@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect } from 'react';
 import Header from "./Header.jsx";
 import Main from "./Main.jsx";
 import Footer from "./Footer.jsx";
@@ -13,15 +13,15 @@ import AddPlacePopup from "./AddPlacePopup.jsx";
 //import {Routes, Route} from "react-router-dom";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({name:'', link:''});
-  const [openImagePopup, setOpenImagePopup] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({name:'', link:''});
+  const [openImagePopup, setOpenImagePopup] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([profileInfo, cards]) => {
         setCurrentUser(profileInfo);
@@ -38,6 +38,9 @@ function App() {
       .then((value) => {
       setCurrentUser(value);
       closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
   function handleUpdateAvatar(data) {
@@ -59,6 +62,9 @@ function App() {
       setCards([newCard, ...cards]);
       closeAllPopups();
     })
+    .catch((err) => {
+      console.log(err);
+    });
   }
   const handleCardClick = (card) => {
     setOpenImagePopup(!openImagePopup);
@@ -86,16 +92,26 @@ function App() {
     setOpenImagePopup(false);
   }
   function handleCardDelete(id) {
-    api.deleteCard(id).then(() => {
+    api
+    .deleteCard(id)
+    .then(() => {
       const newCards = cards.filter((item) => item._id !== id);
       setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    api
+    .changeLikeCardStatus(card._id, !isLiked)
+    .then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
   return (

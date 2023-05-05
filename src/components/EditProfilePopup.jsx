@@ -1,18 +1,22 @@
 import PopupWithForm from "./PopupWithForm.jsx";
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { CurrentUserContext } from "../contexsts/CurrentUserContext";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser , isLoading}) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = React.useContext(CurrentUserContext);
   
-  const [name, setName] = React.useState({name:""});
-  const [description, setDescription] = React.useState({description:""});
-  const [textSubmit, setTextSubmit]=React.useState('Сохранить');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [textSubmit, setTextSubmit]= useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setTimeout(()=>setTextSubmit('Сохранить'), 1000)   
+  }, [isOpen]);
+
+  useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleChangeDescription(evt) {
     setDescription(evt.target.value);
@@ -23,7 +27,9 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser , isLoading}) {
   function handleSubmit(evt) {
     evt.preventDefault();
     setTextSubmit('Сохранение...');
+  
     onUpdateUser({ name, about: description });
+    
   }
 
   return (
